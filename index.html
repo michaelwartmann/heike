@@ -127,7 +127,10 @@ r<!DOCTYPE html>
             <img src="heike.jpg" alt="Heike">
             <img src="fonti.jpg" alt="Fonti">
         </div>
-        <button class="playButton" onclick="startGame()">Hau den Pedro</button> <!-- Button to start the game -->
+        <!-- Add this inside the starterPage div where other buttons are placed -->
+        <button class="playButton" onclick="window.location.href='pedro.html'">Hau den Pedro</button>
+        <button class="playButton" onclick="window.location.href='fonti.html'">Jag den Fonti</button>
+
         <button class="musicButton" onclick="playMusic()">Play Music</button> <!-- Button to play music -->
         <audio id="birthdaySong" src="heike.mp3" loop></audio> <!-- Birthday song audio -->
     </div>
