@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Heike vs. Pedro - Tennisspiel</title>
+    <style>
+        /* Similar styles as before */
+        body, #gameContainer, canvas {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #exitButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <button id="exitButton" onclick="window.location.href='index.html'">Exit</button>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        // Similar script setup but adapted for Heike vs. Pedro
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Paddle variables for Heike (left) and Pedro (right)
+        const paddleHeight = 120;
+        const paddleWidth = 60;
+        let heikeY = canvas.height / 2 - paddleHeight / 2;
+        let pedroY = canvas.height / 2 - paddleHeight / 2;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballSpeedX = 3;
+        let ballSpeedY = 0;
+
+        const heikeFace = new Image();
+        heikeFace.src = 'heike.png'; // Heike's image
+        const pedroFace = new Image();
+        pedroFace.src = 'pedro.png'; // Pedro's image
+        const courtImage = new Image();
+        courtImage.src = 'court.png'; // Tennis court background
+
+        // Draw game elements
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (courtImage.complete) ctx.drawImage(courtImage, 0, 0, canvas.width, canvas.height);
+            if (heikeFace.complete) ctx.drawImage(heikeFace, 10, heikeY, paddleWidth, paddleHeight);
+            if (pedroFace.complete) ctx.drawImage(pedroFace, canvas.width - paddleWidth - 10, pedroY, paddleWidth, paddleHeight);
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 8, 0, Math.PI * 2);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+        }
+
+        // Update positions of ball, Heike, and Pedro
+        function update() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            // Ball collision with top/bottom
+            if (ballY < 0 || ballY > canvas.height) ballSpeedY = -ballSpeedY;
+
+            // Ball collision with Heike
+            if (ballX < paddleWidth + 10 && ballY > heikeY && ballY < heikeY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = (ballY - (heikeY + paddleHeight / 2)) * 0.2;
+            }
+
+            // Ball collision with Pedro
+            if (ballX > canvas.width - paddleWidth - 10 && ballY > pedroY && ballY < pedroY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = (ballY - (pedroY + paddleHeight / 2)) * 0.2;
+            }
+
+            // Reset when a player misses
+            if (ballX < 0 || ballX > canvas.width) {
+                ballX = canvas.width / 2;
+                ballY = canvas.height / 2;
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = 0;
+            }
+
+            // Automatic movement for Pedro
+            if (pedroY + paddleHeight / 2 < ballY) pedroY += 2;
+            else pedroY -= 2;
+        }
+
+        // Main game loop
+        function gameLoop() {
+            draw();
+            update();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start the game
+        gameLoop();
+    </script>
+</body>
+</html>

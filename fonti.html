@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Heike vs. Fonti - Tennisspiel</title>
+    <style>
+        /* Similar styles as before */
+        body, #gameContainer, canvas {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #exitButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <button id="exitButton" onclick="window.location.href='index.html'">Exit</button>
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Paddle variables for Heike (left) and Fonti (right)
+        const paddleHeight = 120;
+        const paddleWidth = 60;
+        let heikeY = canvas.height / 2 - paddleHeight / 2;
+        let fontiY = canvas.height / 2 - paddleHeight / 2;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballSpeedX = 3;
+        let ballSpeedY = 0;
+
+        const heikeFace = new Image();
+        heikeFace.src = 'heike.png'; // Heike's image
+        const fontiFace = new Image();
+        fontiFace.src = 'fonti.png'; // Fonti's image
+        const courtImage = new Image();
+        courtImage.src = 'court.png'; // Tennis court background
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (courtImage.complete) ctx.drawImage(courtImage, 0, 0, canvas.width, canvas.height);
+            if (heikeFace.complete) ctx.drawImage(heikeFace, 10, heikeY, paddleWidth, paddleHeight);
+            if (fontiFace.complete) ctx.drawImage(fontiFace, canvas.width - paddleWidth - 10, fontiY, paddleWidth, paddleHeight);
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 8, 0, Math.PI * 2);
+            ctx.fillStyle = 'yellow';
+            ctx.fill();
+        }
+
+        function update() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            if (ballY < 0 || ballY > canvas.height) ballSpeedY = -ballSpeedY;
+
+            if (ballX < paddleWidth + 10 && ballY > heikeY && ballY < heikeY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = (ballY - (heikeY + paddleHeight / 2)) * 0.2;
+            }
+
+            if (ballX > canvas.width - paddleWidth - 10 && ballY > fontiY && ballY < fontiY + paddleHeight) {
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = (ballY - (fontiY + paddleHeight / 2)) * 0.2;
+            }
+
+            if (ballX < 0 || ballX > canvas.width) {
+                ballX = canvas.width / 2;
+                ballY = canvas.height / 2;
+                ballSpeedX = -ballSpeedX;
+                ballSpeedY = 0;
+            }
+
+            if (fontiY + paddleHeight / 2 < ballY) fontiY += 2;
+            else fontiY -= 2;
+        }
+
+        function gameLoop() {
+            draw();
+            update();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
