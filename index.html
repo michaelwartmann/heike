@@ -294,7 +294,7 @@
                 let deltaY = ballY - (PedroY + paddleHeight / 2);
                 ballSpeedY = deltaY * 0.25; // Adjust vertical speed
                 rallyScore++;
-                scoreElement.textContent = `Aantal slagen: ${rallyScore}`; // Update score
+                scoreElement.textContent = `Schläge aktueller Ballwechsel: ${rallyScore}`; // Update score
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) { // Increase speed after 3 hits
