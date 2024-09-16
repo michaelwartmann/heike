@@ -186,7 +186,7 @@
 
         // Function to play the music
         function playMusic() {
-            birthdaySong.volume = 0.1; // Set volume for soft playback
+            birthdaySong.volume = 0.2; // Set volume for soft playback
             birthdaySong.play().catch((error) => {
                 console.log('Autoplay failed due to browser restrictions:', error);
             });
@@ -338,7 +338,7 @@
                 heikeX = 0.9 * canvas.width; // Position heike on the right
                 ballSpeedX = -3;
                 ballSpeedY = 0;
-                scoreElement.textContent = `Aantal slagen: ${rallyScore}`;
+                scoreElement.textContent = `Schläge aktueller Ballwechsel: ${rallyScore}`;
                 showMessage("Sauber gespielt, nochmal!");
             }
         }
