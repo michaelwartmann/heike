@@ -319,7 +319,7 @@
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) {
-                    showMessage("Nu wat sneller, heike!");
+                    showMessage("Jetzt wirds schneller!");
                     ballSpeedX *= 1.5;
                     ballSpeedY *= 1.5;
                 }
@@ -329,7 +329,7 @@
             if (ballX < 0 || ballX > canvas.width) {
                 if (rallyScore > longestRally) {
                     longestRally = rallyScore; // Update the longest rally if current is greater
-                    longestRallyElement.textContent = `Langste rally: ${longestRally}`; // Display the longest rally
+                    longestRallyElement.textContent = `Laengster Ballwechsel: ${longestRally}`; // Display the longest rally
                 }
                 ballX = 0.9 * canvas.width;
                 ballY = canvas.height / 2;
@@ -339,7 +339,7 @@
                 ballSpeedX = -3;
                 ballSpeedY = 0;
                 scoreElement.textContent = `Aantal slagen: ${rallyScore}`;
-                showMessage("Mooie punt! Nog een keer!");
+                showMessage("Sauber gespielt, nochmal!");
             }
         }
 
