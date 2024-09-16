@@ -1,9 +1,9 @@
-r<!DOCTYPE html>
-<html lang="de"> <!-- Specifies the language as Dutch -->
+<!DOCTYPE html>
+<html lang="nl"> <!-- Specifies the language as Dutch -->
 <head>
     <meta charset="UTF-8"> <!-- Sets the character encoding to UTF-8 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> <!-- Sets the viewport for responsive design -->
-    <title>Alles Gute Heike! - Tennisspiel</title> <!-- Title of the webpage -->
+    <title>Alles Gute, Heike! - Tennisspiel</title> <!-- Title of the webpage -->
     <style>
         /* Basic styling for the body */
         body {
@@ -121,17 +121,14 @@ r<!DOCTYPE html>
 <body>
     <!-- Starter Page Container -->
     <div id="starterPage">
-        <h1>🎉 Alles Gute zum Geburtstag Heike! 🎾</h1> <!-- Heading with emojis -->
-        <p>Viel Spass dir heute! 🎾🎂</p> <!-- Birthday message -->
-        <div class="pictures"> <!-- Images of Michael and Werner -->
+        <h1>🎉 Alles Gute zum Geburtstag! 🎾</h1> <!-- Heading with emojis -->
+        <p>Juhuuuu die Heike! 🎾🎂</p> <!-- Birthday message -->
+        <div class="pictures"> <!-- Images -->
             <img src="heike.jpg" alt="Heike">
             <img src="fonti.jpg" alt="Fonti">
         </div>
-        <!-- Add this inside the starterPage div where other buttons are placed -->
-        <button class="playButton" onclick="window.location.href='pedro.html'">Hau den Pedro</button>
-        <button class="playButton" onclick="window.location.href='fonti.html'">Jag den Fonti</button>
-
-        <button class="musicButton" onclick="playMusic()">Play Music</button> <!-- Button to play music -->
+        <button class="playButton" onclick="startGame()">Hau den Pedro</button> <!-- Button to start the game -->
+        <button class="musicButton" onclick="playMusic()">Geburtstagslied</button> <!-- Button to play music -->
         <audio id="birthdaySong" src="heike.mp3" loop></audio> <!-- Birthday song audio -->
     </div>
 
@@ -164,12 +161,12 @@ r<!DOCTYPE html>
         // Game variables
         const paddleWidth = 60;
         const paddleHeight = 120;
-        let wernerY = canvas.height / 2 - paddleHeight / 2; // Center Werner vertically
-        let wernerX = 0.9 * canvas.width; // Position Heike on the right
-        let targetX = wernerX;
-        let targetY = wernerY;
-        const wernerMaxSpeed = 5; // Maximum speed for Werner's movement
-        let michaelY = canvas.height / 2 - paddleHeight / 2; // Center Michael vertically
+        let heikeY = canvas.height / 2 - paddleHeight / 2; // Center heike vertically
+        let heikeX = 0.9 * canvas.width; // Position Heike on the right
+        let targetX = heikeX;
+        let targetY = heikeY;
+        const heikeMaxSpeed = 5; // Maximum speed for heike's movement
+        let PedroY = canvas.height / 2 - paddleHeight / 2; // Center Pedro vertically
         let ballX = canvas.width;
         let ballY = canvas.height / 2;
         let ballSpeedX = -2; // Horizontal speed of the ball
@@ -178,11 +175,11 @@ r<!DOCTYPE html>
         let longestRally = 0; // Longest rally counter
 
         // Images for faces and court
-        const michaelFace = new Image();
-        michaelFace.src = 'heike.png';
+        const PedroFace = new Image();
+        PedroFace.src = 'pedro.png';
 
-        const wernerFace = new Image();
-        wernerFace.src = 'peter.png';
+        const heikeFace = new Image();
+        heikeFace.src = 'heike.png';
 
         const courtImage = new Image();
         courtImage.src = 'court.png';
@@ -233,42 +230,42 @@ r<!DOCTYPE html>
             ctx.fill();
         }
 
-        // Update Werner's position based on target coordinates
-        function updateWernerPosition() {
-            let deltaX = targetX - wernerX;
-            let deltaY = targetY - wernerY;
+        // Update heike's position based on target coordinates
+        function updateheikePosition() {
+            let deltaX = targetX - heikeX;
+            let deltaY = targetY - heikeY;
             let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-            if (distance > wernerMaxSpeed) {
-                wernerX += (deltaX / distance) * wernerMaxSpeed;
-                wernerY += (deltaY / distance) * wernerMaxSpeed;
+            if (distance > heikeMaxSpeed) {
+                heikeX += (deltaX / distance) * heikeMaxSpeed;
+                heikeY += (deltaY / distance) * heikeMaxSpeed;
             } else {
-                wernerX = targetX;
-                wernerY = targetY;
+                heikeX = targetX;
+                heikeY = targetY;
             }
 
-            // Constrain Werner within the canvas
-            if (wernerX < canvas.width / 2) {
-                wernerX = canvas.width / 2;
+            // Constrain heike within the canvas
+            if (heikeX < canvas.width / 2) {
+                heikeX = canvas.width / 2;
             }
-            if (wernerY < 0) {
-                wernerY = 0;
+            if (heikeY < 0) {
+                heikeY = 0;
             }
-            if (wernerY > canvas.height - paddleHeight) {
-                wernerY = canvas.height - paddleHeight;
+            if (heikeY > canvas.height - paddleHeight) {
+                heikeY = canvas.height - paddleHeight;
             }
         }
 
-        // Update Michael's position based on the ball position
-        function updateMichaelPosition() {
-            const michaelCenter = michaelY + paddleHeight / 2;
+        // Update Pedro's position based on the ball position
+        function updatePedroPosition() {
+            const PedroCenter = PedroY + paddleHeight / 2;
             const targetPosition = ballY - paddleHeight / 4;
             const moveSpeed = 6;
 
-            if (michaelCenter < targetPosition) {
-                michaelY = Math.min(canvas.height - paddleHeight, michaelY + moveSpeed);
-            } else if (michaelCenter > targetPosition) {
-                michaelY = Math.max(0, michaelY - moveSpeed);
+            if (PedroCenter < targetPosition) {
+                PedroY = Math.min(canvas.height - paddleHeight, PedroY + moveSpeed);
+            } else if (PedroCenter > targetPosition) {
+                PedroY = Math.max(0, PedroY - moveSpeed);
             }
         }
 
@@ -286,43 +283,43 @@ r<!DOCTYPE html>
                 ballSpeedY = -Math.abs(ballSpeedY);
             }
 
-            // Collision with Michael's paddle
+            // Collision with Pedro's paddle
             if (
                 ballX < paddleWidth &&
-                ballY > michaelY &&
-                ballY < michaelY + paddleHeight &&
+                ballY > PedroY &&
+                ballY < PedroY + paddleHeight &&
                 ballSpeedX < 0
             ) {
                 ballSpeedX = -ballSpeedX; // Reverse ball direction
-                let deltaY = ballY - (michaelY + paddleHeight / 2);
+                let deltaY = ballY - (PedroY + paddleHeight / 2);
                 ballSpeedY = deltaY * 0.25; // Adjust vertical speed
                 rallyScore++;
                 scoreElement.textContent = `Aantal slagen: ${rallyScore}`; // Update score
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) { // Increase speed after 3 hits
-                    showMessage("Nu wat sneller, Werner!");
+                    showMessage("Nu wat sneller, heike!");
                     ballSpeedX *= 1.5;
                     ballSpeedY *= 1.5;
                 }
             }
 
-            // Collision with Werner's paddle
+            // Collision with heike's paddle
             if (
-                ballX > wernerX &&
-                ballY > wernerY &&
-                ballY < wernerY + paddleHeight &&
+                ballX > heikeX &&
+                ballY > heikeY &&
+                ballY < heikeY + paddleHeight &&
                 ballSpeedX > 0
             ) {
                 ballSpeedX = -ballSpeedX;
-                let deltaY = ballY - (wernerY + paddleHeight / 2);
+                let deltaY = ballY - (heikeY + paddleHeight / 2);
                 ballSpeedY = deltaY * 0.25;
                 rallyScore++;
                 scoreElement.textContent = `Aantal slagen: ${rallyScore}`;
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) {
-                    showMessage("Nu wat sneller, Werner!");
+                    showMessage("Nu wat sneller, heike!");
                     ballSpeedX *= 1.5;
                     ballSpeedY *= 1.5;
                 }
@@ -337,8 +334,8 @@ r<!DOCTYPE html>
                 ballX = 0.9 * canvas.width;
                 ballY = canvas.height / 2;
                 rallyScore = 0;
-                wernerY = canvas.height / 2 - paddleHeight / 2; // Center Werner vertically
-                wernerX = 0.9 * canvas.width; // Position Werner on the right
+                heikeY = canvas.height / 2 - paddleHeight / 2; // Center heike vertically
+                heikeX = 0.9 * canvas.width; // Position heike on the right
                 ballSpeedX = -3;
                 ballSpeedY = 0;
                 scoreElement.textContent = `Aantal slagen: ${rallyScore}`;
@@ -368,18 +365,18 @@ r<!DOCTYPE html>
                 ctx.drawImage(courtImage, 0, 0, canvas.width, canvas.height);
             }
 
-            // Draw Michael's paddle
-            if (michaelFace.complete) {
-                ctx.drawImage(michaelFace, 0, michaelY, paddleWidth, paddleHeight);
+            // Draw Pedro's paddle
+            if (PedroFace.complete) {
+                ctx.drawImage(PedroFace, 0, PedroY, paddleWidth, paddleHeight);
             } else {
-                drawRect(0, michaelY, paddleWidth, paddleHeight, 'white');
+                drawRect(0, PedroY, paddleWidth, paddleHeight, 'white');
             }
 
-            // Draw Werner's paddle
-            if (wernerFace.complete) {
-                ctx.drawImage(wernerFace, wernerX, wernerY, paddleWidth, paddleHeight);
+            // Draw heike's paddle
+            if (heikeFace.complete) {
+                ctx.drawImage(heikeFace, heikeX, heikeY, paddleWidth, paddleHeight);
             } else {
-                drawRect(wernerX, wernerY, paddleWidth, paddleHeight, 'white');
+                drawRect(heikeX, heikeY, paddleWidth, paddleHeight, 'white');
             }
 
             // Draw the ball
@@ -387,8 +384,8 @@ r<!DOCTYPE html>
 
             // Update positions
             updateBallPosition();
-            updateMichaelPosition();
-            updateWernerPosition();
+            updatePedroPosition();
+            updateheikePosition();
 
             // Request the next animation frame
             requestAnimationFrame(gameLoop);
@@ -398,7 +395,7 @@ r<!DOCTYPE html>
         canvas.addEventListener('touchstart', handleTouch);
         canvas.addEventListener('mousedown', handleTouch);
 
-        // Handle touch or click input to move Werner
+        // Handle touch or click input to move Heike
         function handleTouch(event) {
             const rect = canvas.getBoundingClientRect();
             const touchX = event.clientX - rect.left || event.touches[0].clientX - rect.left;
