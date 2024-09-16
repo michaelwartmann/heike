@@ -127,7 +127,7 @@
             <img src="heike.jpg" alt="Heike">
             <img src="fonti.jpg" alt="Fonti">
         </div>
-        <button class="playButton" onclick="startGame()">Hau den Pedro</button> <!-- Button to start the game -->
+        <button class="playButton" onclick="startGame()">Hau den Pedro weg!</button> <!-- Button to start the game -->
         <button class="musicButton" onclick="playMusic()">Geburtstagslied</button> <!-- Button to play music -->
         <audio id="birthdaySong" src="heike.mp3" loop></audio> <!-- Birthday song audio -->
     </div>
@@ -138,8 +138,8 @@
         <span class="rotate-message">Rotate for better experience</span> <!-- Rotate message -->
         <canvas id="gameCanvas"></canvas> <!-- Canvas for game rendering -->
         <div class="rally-container">
-            <p id="longestRally" class="rally-display">Langste rally: 0</p> <!-- Longest rally display -->
-            <p id="score" class="rally-display">Aantal slagen: 0</p> <!-- Current rally display -->
+            <p id="longestRally" class="rally-display">Längste rally: 0</p> <!-- Longest rally display -->
+            <p id="score" class="rally-display">Schläge aktueller Ballwechsel: 0</p> <!-- Current rally display -->
         </div>
         <div id="message"></div> <!-- Message display -->
         <audio id="hitSound" src="hit.mp3"></audio> <!-- Hit sound effect -->
@@ -298,7 +298,7 @@
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) { // Increase speed after 3 hits
-                    showMessage("Nu wat sneller, heike!");
+                    showMessage("Jetzt aufs Gas, Heike!");
                     ballSpeedX *= 1.5;
                     ballSpeedY *= 1.5;
                 }
@@ -329,7 +329,7 @@
             if (ballX < 0 || ballX > canvas.width) {
                 if (rallyScore > longestRally) {
                     longestRally = rallyScore; // Update the longest rally if current is greater
-                    longestRallyElement.textContent = `Laengster Ballwechsel: ${longestRally}`; // Display the longest rally
+                    longestRallyElement.textContent = `Längster Ballwechsel: ${longestRally}`; // Display the longest rally
                 }
                 ballX = 0.9 * canvas.width;
                 ballY = canvas.height / 2;
