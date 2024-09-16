@@ -315,7 +315,7 @@
                 let deltaY = ballY - (heikeY + paddleHeight / 2);
                 ballSpeedY = deltaY * 0.25;
                 rallyScore++;
-                scoreElement.textContent = `Aantal slagen: ${rallyScore}`;
+                scoreElement.textContent = `Schläge aktueller Ballwechsel: ${rallyScore}`;
                 playHitSound(); // Play sound on hit
 
                 if (rallyScore % 3 === 0) {
